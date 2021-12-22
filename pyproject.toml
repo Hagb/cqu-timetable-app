@@ -1,0 +1,48 @@
+[tool.briefcase]
+project_name = "重大课程表（非官方）"
+bundle = "name.hagb"
+version = "0.0.1"
+url = "https://hagb.name/cqutimetable"
+license = "AGPL-3.0-or-later"
+author = 'Hagb'
+author_email = "hagb@hagb.name"
+
+[tool.briefcase.app.cqutimetable]
+formal_name = "重大课程表（非官方）"
+description = "在本机运行的重大课程表"
+icon = "src/cqutimetable/resources/cqutimetable"
+sources = ['src/cqutimetable']
+requires = ["--no-binary", "pydantic", "pydantic", "./pymycqu[pyaes]"]
+template = "./briefcase-android-gradle-template/"
+template_branch = "custom"
+
+[tool.briefcase.app.cqutimetable.macOS]
+requires = [
+    'toga-cocoa>=0.3.0.dev20',
+]
+
+[tool.briefcase.app.cqutimetable.linux]
+requires = [
+    'toga-gtk>=0.3.0.dev20',
+]
+system_requires = [
+    'libgirepository1.0-dev',
+    'libcairo2-dev',
+    'libpango1.0-dev',
+    'libwebkitgtk-3.0-0',
+    'gir1.2-webkit-3.0',
+]
+
+[tool.briefcase.app.cqutimetable.windows]
+requires = [
+    'toga-winforms>=0.3.0.dev20',
+]
+
+# Mobile deployments
+[tool.briefcase.app.cqutimetable.iOS]
+requires = [
+    'toga-iOS>=0.3.0.dev20',
+]
+
+[tool.briefcase.app.cqutimetable.android]
+requires = ["./toga/src/core/", "./toga/src/android/"]
