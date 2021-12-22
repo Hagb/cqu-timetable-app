@@ -1,0 +1,6 @@
+[submodule "briefcase-android-gradle-template"]
+	path = briefcase-android-gradle-template
+	url = https://github.com/Hagb/briefcase-android-gradle-template.git
+[submodule "toga"]
+	path = toga
+	url = https://github.com/Hagb/toga.git

@@ -12,7 +12,7 @@ formal_name = "重大课程表（非官方）"
 description = "在本机运行的重大课程表"
 icon = "src/cqutimetable/resources/cqutimetable"
 sources = ['src/cqutimetable']
-requires = ["--no-binary", "pydantic", "pydantic", "./pymycqu[pyaes]"]
+requires = ["--no-binary", "pydantic", "pydantic", "mycqu[pyaes]"]
 template = "./briefcase-android-gradle-template/"
 template_branch = "custom"
 
