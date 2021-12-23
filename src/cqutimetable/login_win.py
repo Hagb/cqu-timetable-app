@@ -1,3 +1,4 @@
+from typing import Optional, Callable, Any
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN, ROW, JUSTIFY
@@ -10,7 +11,9 @@ from mycqu.mycqu import access_mycqu
 from mycqu.user import User
 
 
-def try_login(win, username, password, force_relogin: bool = False):
+def try_login(win, username, password,
+              callbak: Callable[[bool], Any],
+              force_relogin: bool = False):
     result = False
     captcha_exception: NeedCaptcha
 
@@ -21,7 +24,7 @@ def try_login(win, username, password, force_relogin: bool = False):
         app.record.username = username
         app.record.password = password
         app.record.write()
-        result = True
+        callbak(True)
 
     def captcha_intput_callback(captcha: str):
         if captcha:
@@ -40,8 +43,10 @@ def try_login(win, username, password, force_relogin: bool = False):
         login(app.session, username, password, force_relogin=force_relogin)
     except IncorrectLoginCredentials:
         dialogs.incorrect_cert(win)
+        callbak(False)
     except UnknownAuthserverException as e:
         dialogs.unknown_error(win, str(e))
+        callbak(False)
     except NeedCaptcha as e:
         captcha_exception = e
         captcha_win = CaptchaWindow(e.image, captcha_intput_callback)
@@ -49,8 +54,6 @@ def try_login(win, username, password, force_relogin: bool = False):
         captcha_win.show()
     else:
         success_login()
-
-    return result
 
 
 class LoginWindow(toga.Window):
@@ -61,7 +64,13 @@ class LoginWindow(toga.Window):
         if not self.passwd_input.value:
             self.info_dialog("缺少登录信息", "请输入密码")
             return
-        if try_login(self, self.id_input.value, self.passwd_input.value, True):
+        try_login(self, self.id_input.value,
+                  self.passwd_input.value,
+                  self.login_callback,
+                  True)
+
+    def login_callback(self, status: bool):
+        if status:
             self.success = True
             self.close()
             if self.parent:
@@ -75,11 +84,11 @@ class LoginWindow(toga.Window):
     def on_close(self, widget):
         self.callback(self.success)
 
-    def __init__(self, parent, callable):
+    def __init__(self, parent, callback):
         super().__init__()
         self.title = "登录"
         self.parent = parent
-        self.callback = callable
+        self.callback = callback
         self.success = is_logined(app.session)
         app.app.paths.cache.mkdir(parents=True, exist_ok=True)
         main_box = toga.Box(style=Pack(

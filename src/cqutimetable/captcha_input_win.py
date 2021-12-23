@@ -28,7 +28,7 @@ class CaptchaWindow(toga.Window):
         input_view = toga.TextInput(style=Pack(flex=1))
         label = toga.Label(
             '请输入验证码：',
-            style= Pack(padding=5, text_align=JUSTIFY)
+            style=Pack(padding=5, text_align=JUSTIFY)
         )
         input_box.add(label)
         input_box.add(input_view)

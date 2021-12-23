@@ -34,9 +34,9 @@ class CalWin(toga.Window):
             app.record.event_ids.append(
                 self.java_cal.addEvent(
                     cal_id,  # calId
-                    exam.course.name,  # title
+                    exam.course.name + " 考试",  # title
                     exam.room,  # location
-                    exam.course.name + "考试",  # description
+                    exam.course.name + " 考试",  # description
                     int(
                         datetime.combine(exam.date, exam.start_time).timestamp()*1000),  # dtstart
                     int(
@@ -47,10 +47,10 @@ class CalWin(toga.Window):
             )
         app.record.write()
         self.close()
-        app.app.main_window.info_dialog("导入成功", "成功导入考表至 " + row.title)
+        app.app.main_window.info_dialog("导出成功", "成功导出考表至 " + row.title)
 
     def __init__(self, python_cal, java_cal):
-        super().__init__(title="选择要导入考表的日历")
+        super().__init__(title="选择要导出考表的日历")
         self.python_cal = python_cal
         self.java_cal = java_cal
         main_box = toga.Box()

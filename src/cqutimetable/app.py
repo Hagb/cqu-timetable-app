@@ -33,10 +33,12 @@ class MainApp(toga.App):
         exams = Exam.fetch(record.username)
         # access_mycqu(session)
         self.exam_list.data.clear()
-        for exam in exams[::-1]:
+        today = date.today()
+        for exam in exams:
+            if exam.date < today:
+                continue
             self.exam_list.data.append(
-                icon=toga.Icon(
-                    "resources/cqutimetable.png") if exam.date >= date.today() else None,
+                icon=toga.Icon("resources/cqutimetable.png"),
                 title=f"{exam.course.name}考试 位于 {exam.room}",
                 subtitle=f'{exam.date.strftime("%Y-%m-%d")} 第 {exam.week} 周周{self.week[exam.weekday]} '
                 f'{exam.start_time.strftime("%H:%M")} ~ {exam.end_time.strftime("%H:%M")}'
@@ -82,12 +84,16 @@ class MainApp(toga.App):
         self.main_window.show()
 
         if record.username and record.password:
-            if try_login(main_window, record.username, record.password):
-                self.refresh_after_login()
-            else:
-                main_window.info_dialog("登录失败", "请重新登录")
-                self.login_window()
+            try_login(main_window, record.username,
+                      record.password, self.login_fallback)
         else:
+            self.login_window()
+
+    def login_fallback(self, status: bool):
+        if status:
+            self.refresh_after_login()
+        else:
+            self.main_window.info_dialog("登录失败", "请重新登录")
             self.login_window()
 
 
