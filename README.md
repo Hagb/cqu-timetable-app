@@ -30,3 +30,13 @@ briefcase build android
 - [ ] PC 端上实现导出 ics 并唤起系统打开方式打开 ics
 - [x] 考表获取、显示、（Android）导出
 - [ ] 课表获取、显示、（Android）导出
+
+## FAQ
+
+### 为什么日历导出的界面没有显示出任何日历
+
+日历导出需要有“日历账户”，这由系统日历应用或第三方日历应用提供（如 [Etar](https://f-droid.org/zh_Hans/packages/ws.xsoh.etar) 的 offline calendar）。
+
+### APP 打开就闪退
+
+请检查系统版本不低于 Android 6。如果系统版本确实不低于 Android 6，欢迎带上日志输出提交 issue 反馈。
