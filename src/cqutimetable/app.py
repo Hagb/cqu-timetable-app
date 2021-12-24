@@ -29,8 +29,8 @@ class MainApp(toga.App):
     week = ['一', '二', '三', '四', '五', '六', '日']
 
     def set_exam_list(self, _=None):
-        print("set_exam_list")
-        exams = Exam.fetch(record.username)
+        print(f"set_exam_list of {record.user_info.code}")
+        exams = Exam.fetch(record.user_info.code)
         # access_mycqu(session)
         self.exam_list.data.clear()
         today = date.today()
@@ -39,7 +39,7 @@ class MainApp(toga.App):
                 continue
             self.exam_list.data.append(
                 icon=toga.Icon("resources/cqutimetable.png"),
-                title=f"{exam.course.name}考试 位于 {exam.room}",
+                title=f"{exam.course.name} 考试 位于 {exam.room}",
                 subtitle=f'{exam.date.strftime("%Y-%m-%d")} 第 {exam.week} 周周{self.week[exam.weekday]} '
                 f'{exam.start_time.strftime("%H:%M")} ~ {exam.end_time.strftime("%H:%M")}'
             )

@@ -23,7 +23,7 @@ class CalWin(toga.Window):
     def cal_selected(self, _, row):
         cal_id = row.pk
         try:
-            exams = Exam.fetch(app.record.username)
+            exams = Exam.fetch(app.record.user_info.code)
         except RequestException as e:
             dialogs.require_error(self, str(e))
             return
