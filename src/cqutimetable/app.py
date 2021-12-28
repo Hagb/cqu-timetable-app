@@ -39,7 +39,7 @@ class MainApp(toga.App):
                 continue
             self.exam_list.data.append(
                 icon=toga.Icon("resources/cqutimetable.png"),
-                title=f"{exam.course.name} 考试 位于 {exam.room}",
+                title=f"{exam.course.name} 考试 位于 {exam.room} 座号{exam.seat_num}",
                 subtitle=f'{exam.date.strftime("%Y-%m-%d")} 第 {exam.week} 周周{self.week[exam.weekday]} '
                 f'{exam.start_time.strftime("%H:%M")} ~ {exam.end_time.strftime("%H:%M")}'
             )

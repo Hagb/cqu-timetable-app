@@ -35,7 +35,7 @@ class CalWin(toga.Window):
                 self.java_cal.addEvent(
                     cal_id,  # calId
                     exam.course.name + " 考试",  # title
-                    exam.room,  # location
+                    exam.room+f" 座号{exam.seat_num}",  # location
                     exam.course.name + " 考试",  # description
                     int(
                         datetime.combine(exam.date, exam.start_time).timestamp()*1000),  # dtstart
